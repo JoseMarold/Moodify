@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .app-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: #1E1E1E;
+    color: white;
+  }
+  
+  /* Barra de navegación */
+  .navbar {
+    width: 100%;
+    height: 80px;
+    background: #152F00;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+  }
+  
+  .navbar-logo {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+  }
+  
+  /* Contenido principal */
+  .history-container {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .history-title {
+    margin-bottom: 20px;
+    color: white;
+    font-size: 24px;
+  }
+  
+  .table-container {
+    width: 100%;
+    max-width: 800px;
+    overflow-x: auto;
+    margin-bottom: 30px;
+  }
+  
+  .recommendations-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #18230F;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .recommendations-table th,
+  .recommendations-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #1F7D53;
+  }
+  
+  .recommendations-table th {
+    background-color: #015932;
+    color: white;
+    font-weight: 600;
+  }
+  
+  .recommendations-table tr:hover {
+    background-color: #32491f;
+  }
+  
+  .back-button {
+    padding: 12px 25px;
+    background-color: #255F38;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+  }
+  
+  .back-button:hover {
+    background-color: #388b54;
+  }
+  
+  .empty-message {
+    text-align: center;
+    padding: 20px;
+    color: #888;
+    font-style: italic;
+  }
+  
+  /* Versión móvil */
+  @media (max-width: 768px) {
+    .navbar {
+      height: 70px;
+    }
+    
+    .navbar-logo {
+      height: 40px;
+    }
+  
+    .history-title {
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+  
+    .recommendations-table th,
+    .recommendations-table td {
+      padding: 8px 10px;
+      font-size: 14px;
+    }
+  
+    .back-button {
+      padding: 10px 20px;
+      font-size: 14px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .history-container {
+      padding: 15px 10px;
+    }
+    
+    .recommendations-table {
+      font-size: 12px;
+    }
+  }
