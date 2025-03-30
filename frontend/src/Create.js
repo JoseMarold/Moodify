@@ -1,27 +1,31 @@
 import vinyl from './Vinyl record.png';
 import logo from './moodifylogo.png';
 import './Create.css';
+import { Link } from 'react-router-dom';
 
 function Create() {
    return (
     <div className="app-container">
-      {/* Barra superior con logo */}
+      
       <header className="navbar">
-        <img src={logo} alt="MOODIFY Logo" className="navbar-logo" />
+        <Link to="/">
+          <img src={logo} alt="MOODIFY Logo" className="navbar-logo" />
+        </Link>
       </header>
 
-      {/* Resto del código permanece igual */}
       <div className="main-content">
         <div className="image-section">
           <img src={vinyl} alt="Vinyl" />
         </div>
         <div className="form-section">
-          <h1 className="logo">Sign Up</h1>
           <form>
+            <h1 className="Form-title">Sign Up</h1>
             <input type="text" placeholder="Username" className="input" />
             <input type="email" placeholder="Email" className="input" />
             <input type="password" placeholder="Password" className="input" />
-            <button type="submit" className="button">Sign Up</button>
+            <Link to="/recomendations">
+              <button type="submit" className="button">Sign Up</button>
+            </Link>
           </form>
         </div>
       </div>

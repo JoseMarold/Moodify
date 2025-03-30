@@ -1,24 +1,32 @@
-import React, { useState } from 'react';
-import './Historical.css';
 import logo from './moodifylogo.png';
+import userPhoto from './UserPhoto.png';
+import './Recomendations.css';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-function HistoricalRecommendations() {
-
-  const [recommendations, setRecommendations] = useState([]);
-
-  return (
-    <div className="app-container">
-      <header className="navbar">
+function Recomendations() {
+   const [recommendations, setRecommendations] = useState([]);
+   
+   return (
+    <div className='Recomendations-page'>
+        <div className="app-container">
+        <header className="navbar">
             <Link to="/">
                 <img src={logo} alt="MOODIFY Logo" className="navbar-logo" />
             </Link>
         </header>
 
-      <div className="history-container">
-        <h1 className="history-title">Historical Recommendations</h1>
-        
-        <div className="table-container">
+        <div className='recomendation-container'>
+          
+          <form className='input-container'>
+              <button className='button'>Import image</button>
+              <img src={userPhoto} alt="user photo" className="user-photo" />
+              <Link to="/historical">
+                <button className='button'>Get historical recomendations</button>
+              </Link>
+          </form>
+
+           <div className="table-container">
           <table className="recommendations-table">
             <thead>
               <tr>
@@ -45,15 +53,12 @@ function HistoricalRecommendations() {
               )}
             </tbody>
           </table>
+        </div> 
         </div>
-
-        <Link to="/recomendations">
-          <button className="back-button">Back to recommendation</button>
-        </Link>
-        
-      </div>
+        </div>
     </div>
+    
   );
 }
 
-export default HistoricalRecommendations;
+export default Recomendations;
