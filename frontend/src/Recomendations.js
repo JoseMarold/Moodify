@@ -11,9 +11,14 @@ function Recomendations() {
     <div className='Recomendations-page'>
         <div className="app-container">
         <header className="navbar">
-            <Link to="/">
-                <img src={logo} alt="MOODIFY Logo" className="navbar-logo" />
-            </Link>
+          <Link to="/">
+            <img src={logo} alt="MOODIFY Logo" className="navbar-logo" />
+          </Link>
+            <div className='logout-container'>
+              <Link to="/">
+                <button type ="submit" className="logout-button">Log Out</button>
+                </Link>
+            </div>
         </header>
 
         <div className='recomendation-container'>

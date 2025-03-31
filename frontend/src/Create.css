@@ -31,6 +31,28 @@
     color: white;
     font-size: 24px;
     font-weight: bold;
+    justify-content: space-between;
+    padding: 0 20px;
+  }
+  .logout-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logout-button {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 8px 12px;
+    transition: all 0.3s ease;
+  }
+  
+  .logout-button:hover {
+    color: #1DB954;
+    text-decoration: underline;
   }
   .navbar-logo {
     height: 50px; /* Ajusta según necesites */
@@ -167,5 +189,10 @@
   
     .input, .button {
       max-width: 100% !important;
+    }
+    
+    .logout-button {
+      font-size: 14px;
+      padding: 6px 10px;
     }
   }

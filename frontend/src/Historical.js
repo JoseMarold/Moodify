@@ -10,10 +10,15 @@ function HistoricalRecommendations() {
   return (
     <div className="app-container">
       <header className="navbar">
-            <Link to="/">
-                <img src={logo} alt="MOODIFY Logo" className="navbar-logo" />
-            </Link>
-        </header>
+        <Link to="/recomendations">
+          <img src={logo} alt="MOODIFY Logo" className="navbar-logo" />
+        </Link>
+        <div className='logout-container'>
+          <Link to="/">
+            <button type ="submit" className="logout-button">Log Out</button>
+          </Link>
+        </div>
+      </header>
 
       <div className="history-container">
         <h1 className="history-title">Historical Recommendations</h1>
