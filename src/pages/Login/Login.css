@@ -23,7 +23,7 @@
   
   /* Contenedor principal con imagen y formulario */
   .Login-page .main-content {
-    background-image: url('./MusicBackground.png');
+    background-image: url('../../images/MusicBackground.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

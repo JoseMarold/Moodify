@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Historical.css';
-import logo from './moodifylogo.png';
+import logo from '../../images/moodifylogo.png';
 import { Link } from 'react-router-dom';
 
 function HistoricalRecommendations() {

@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './Login';
-import Create from './Create';
-import Recomendations from './Recomendations';
-import Historical from './Historical';
+import Login from './pages/Login/Login';
+import Create from './pages/Create/Create';
+import Recomendations from './pages/Recommendations/Recomendations';
+import Historical from './pages/Historical/Historical';
 
 function App() {
   return (
