@@ -1,22 +1,70 @@
 import React, { useState } from 'react';
 import './Historical.css';
-import logo from '../../images/moodifylogo.png';
-import { Link } from 'react-router-dom';
+import logo from './moodifylogo.png';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 function HistoricalRecommendations() {
+  useEffect(() => {
+  const token = localStorage.getItem("token");
+  if (!token) return;
+
+  fetch("http://localhost:3001/historical", {
+    headers: {
+      Authorization: token
+    }
+  })
+    .then(res => res.json())
+    .then(data => setRecommendations(data))
+    .catch(err => {
+      console.error("Error fetching historical recommendations:", err);
+    });
+}, []);
 
   const [recommendations, setRecommendations] = useState([]);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
+  const handleBackToRecommendations = () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("You need to be logged in.");
+      navigate("/");
+      return;
+    }
+
+    fetch("http://localhost:3001/verify", {
+      headers: { Authorization: token }
+    })
+    .then(res => {
+      if (!res.ok) throw new Error("Invalid token");
+      navigate("/recomendations");
+    })
+    .catch(() => {
+      alert("Invalid or expired token.");
+      localStorage.removeItem("token");
+      navigate("/");
+    });
+  };
 
   return (
     <div className="app-container">
       <header className="navbar">
-        <Link to="/recomendations">
-          <img src={logo} alt="MOODIFY Logo" className="navbar-logo" />
-        </Link>
+        <img
+          src={logo}
+          alt="MOODIFY Logo"
+          className="navbar-logo"
+          onClick={handleBackToRecommendations}
+          style={{ cursor: "pointer" }}
+        />
         <div className='logout-container'>
-          <Link to="/">
-            <button type ="submit" className="logout-button">Log Out</button>
-          </Link>
+          <button type="button" className="logout-button" onClick={handleLogout}>
+            Log Out
+          </button>
         </div>
       </header>
 
@@ -30,6 +78,7 @@ function HistoricalRecommendations() {
                 <th>Song</th>
                 <th>Artist</th>
                 <th>Album</th>
+                <th>Emotion</th>
               </tr>
             </thead>
             <tbody>
@@ -39,6 +88,7 @@ function HistoricalRecommendations() {
                     <td>{item.song || '-'}</td>
                     <td>{item.artist || '-'}</td>
                     <td>{item.album || '-'}</td>
+                    <td>{item.emotion||'-'}</td>
                   </tr>
                 ))
               ) : (
@@ -52,10 +102,9 @@ function HistoricalRecommendations() {
           </table>
         </div>
 
-        <Link to="/recomendations">
-          <button className="back-button">Back to recommendation</button>
-        </Link>
-        
+        <button className="back-button" onClick={handleBackToRecommendations}>
+          Back to recommendation
+        </button>
       </div>
     </div>
   );
