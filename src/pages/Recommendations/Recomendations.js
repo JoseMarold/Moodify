@@ -1,5 +1,5 @@
-import logo from './moodifylogo.png';
-import userPhoto from './UserPhoto.png';
+import logo from '../../images/moodifylogo.png';
+import userPhoto from '../../images/UserPhoto.png';
 import './Recomendations.css';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';

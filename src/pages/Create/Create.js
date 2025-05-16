@@ -1,5 +1,5 @@
-import vinyl from './Vinyl record.png';
-import logo from './moodifylogo.png';
+import vinyl from '../../images/Vinyl record.png';
+import logo from '../../images/moodifylogo.png';
 import './Create.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
