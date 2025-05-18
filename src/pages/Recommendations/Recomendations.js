@@ -3,8 +3,12 @@ import userPhoto from '../../images/UserPhoto.png';
 import './Recomendations.css';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+const API_URL = process.env.REACT_APP_API_URL;
 
 function Recomendations() {
+  const [base64Image, setBase64Image] = useState(null);
+  const [detectedEmotion, setDetectedEmotion] = useState(null);
+  const fileInputRef = React.useRef();
   const [recommendations, setRecommendations] = useState([]);
   const navigate = useNavigate();
 
@@ -15,7 +19,7 @@ function Recomendations() {
       alert("You must be logged in to access this page.");
       navigate("/");
     } else {
-      fetch("http://localhost:3001/verify", {
+      fetch(`${API_URL}/verify`, {
         headers: { Authorization: token }
       })
       .then(res => {
@@ -42,7 +46,7 @@ function Recomendations() {
     return;
   }
 
-  fetch("http://localhost:3001/verify", {
+  fetch(`${API_URL}/verify`, {
     headers: { Authorization: token }
   })
   .then(res => {
@@ -58,23 +62,101 @@ function Recomendations() {
 
   const handleImportImage = () => {
     const token = localStorage.getItem("token");
+
     if (!token) {
       alert("You need to be logged in.");
       return;
     }
 
-    fetch("http://localhost:3001/verify", {
+    fetch(`${API_URL}/verify`, {
       headers: { Authorization: token }
     })
     .then(res => {
       if (!res.ok) throw new Error("Invalid token");
-      alert("Token verified successfully.");
+      fileInputRef.current.click();
     })
     .catch(() => {
       alert("Invalid or expired token.");
       localStorage.removeItem("token");
       navigate("/");
     });
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    const token = localStorage.getItem("token");
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64WithPrefix = reader.result;
+        setBase64Image(base64WithPrefix);
+        
+        // Calling Rekognition endpoint in Backend
+        fetch(`${API_URL}/useRekognition`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({content: base64WithPrefix})
+        })
+        .then(res => {
+          if (!res.ok) throw new Error("Error in image analysis");
+          return res.json();
+        })
+        .then(data => {
+          console.log("Backend response:", data);
+          if (data.emotion) {
+            // set detected emotion for more recommendations
+            setDetectedEmotion(data.emotion);
+            // Get recommendations
+            fetch(`${API_URL}/getRecommendations`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": token
+              },
+              body: JSON.stringify({ emotionName: data.emotion })
+            })
+            .then(res => res.json())
+            .then(recommendations => {
+              setRecommendations(recommendations);
+            })
+            .catch(() => {
+              alert("Error getting song recommendations.");
+            });
+          }
+        })        
+        .catch(() => {
+          alert("Error while analyzing image");
+        });
+
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const generateMoreRecommendations = () => {
+    const token = localStorage.getItem("token");
+    if (!detectedEmotion) {
+      alert("You need to analyze an image first.");
+      return;
+    }
+  
+    fetch(`${API_URL}/getRecommendations`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": token
+      },
+      body: JSON.stringify({ emotionName: detectedEmotion })
+    })
+      .then(res => res.json())
+      .then(recommendations => {
+        setRecommendations(recommendations);
+      })
+      .catch(() => {
+        alert("Error getting song recommendations.");
+      });
   };
 
   return (
@@ -93,10 +175,17 @@ function Recomendations() {
 
         <div className='recomendation-container'>
           <form className='input-container' onSubmit={e => e.preventDefault()}>
+          <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              onChange={handleFileChange}
+            />
             <button type="button" className='button' onClick={handleImportImage}>
               Import image
             </button>
-            <img src={userPhoto} alt="user photo" className="user-photo" />
+            <img src={base64Image || userPhoto} alt="user" className="user-photo" />
 
             <button type="button" className='button' onClick={goToHistorical}>
               Get historical recommendations
@@ -116,7 +205,7 @@ function Recomendations() {
                 {recommendations.length > 0 ? (
                   recommendations.map((item, index) => (
                     <tr key={index}>
-                      <td>{item.song || '-'}</td>
+                      <td>{item.name || '-'}</td>
                       <td>{item.artist || '-'}</td>
                       <td>{item.album || '-'}</td>
                     </tr>
@@ -130,6 +219,13 @@ function Recomendations() {
                 )}
               </tbody>
             </table>
+            {detectedEmotion && (
+              <div style={{ marginTop: "1rem", textAlign: "center" }}>
+                <button className="button" onClick={generateMoreRecommendations}>
+                  Generate more recommendations
+                </button>
+              </div>
+            )}
           </div> 
         </div>
       </div>

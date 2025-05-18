@@ -3,6 +3,7 @@ import logo from '../../images/moodifylogo.png';
 import './Create.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+const API_URL = process.env.REACT_APP_API_URL;
 
 function Create() {
   const [name, setName] = useState('');
@@ -16,7 +17,7 @@ function Create() {
     const userData = { name, email, password };
 
     try {
-      const response = await fetch('http://localhost:3001/signin', {
+      const response = await fetch(`${API_URL}/signin`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

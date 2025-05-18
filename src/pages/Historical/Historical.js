@@ -3,13 +3,14 @@ import './Historical.css';
 import logo from '../../images/moodifylogo.png';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+const API_URL = process.env.REACT_APP_API_URL;
 
 function HistoricalRecommendations() {
   useEffect(() => {
   const token = localStorage.getItem("token");
   if (!token) return;
 
-  fetch("http://localhost:3001/historical", {
+  fetch(`${API_URL}/historical`, {
     headers: {
       Authorization: token
     }
@@ -37,7 +38,7 @@ function HistoricalRecommendations() {
       return;
     }
 
-    fetch("http://localhost:3001/verify", {
+    fetch(`${API_URL}/verify`, {
       headers: { Authorization: token }
     })
     .then(res => {
@@ -79,6 +80,7 @@ function HistoricalRecommendations() {
                 <th>Artist</th>
                 <th>Album</th>
                 <th>Emotion</th>
+                <th>Date</th>
               </tr>
             </thead>
             <tbody>
@@ -89,6 +91,7 @@ function HistoricalRecommendations() {
                     <td>{item.artist || '-'}</td>
                     <td>{item.album || '-'}</td>
                     <td>{item.emotion||'-'}</td>
+                    <td>{item.created_at||'-'}</td>
                   </tr>
                 ))
               ) : (

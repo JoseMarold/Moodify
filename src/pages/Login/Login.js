@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './Login.css';
 import logo from '../../images/logom.jpg';
+const API_URL = process.env.REACT_APP_API_URL;
 
 function Login() {
   const [name, setName] = useState('');
@@ -12,7 +13,7 @@ function Login() {
     e.preventDefault(); // evita recargar la página
 
     try {
-      const response = await fetch('http://localhost:3001/login', {
+      const response = await fetch(`${API_URL}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
