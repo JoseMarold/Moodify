@@ -9,7 +9,8 @@ function Login() {
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
-    e.preventDefault(); // evita recargar la página
+    e.preventDefault();
+    
 
     try {
       const response = await fetch('http://localhost:3001/login', {
@@ -30,7 +31,7 @@ function Login() {
       }
     } catch (error) {
       console.error('Login error:', error);
-      alert('Server error during login');
+      throw new Error("Server error during login");
     }
   };
 

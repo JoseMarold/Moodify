@@ -32,10 +32,12 @@ function Create() {
         navigate('/recomendations');
       } else {
         alert(data.message || 'Error al crear el usuario');
+        throw new Error("Error al crear el usuario");
       }
     } catch (error) {
       console.error('Error al conectar con el servidor:', error);
       alert('Error del servidor');
+      throw new Error("Error del servidor");
     }
   };
 
