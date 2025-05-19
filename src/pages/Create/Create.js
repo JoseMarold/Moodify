@@ -3,6 +3,7 @@ import logo from '../../images/moodifylogo.png';
 import './Create.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+const Sentry = require('@sentry/react');
 const API_URL = process.env.REACT_APP_API_URL;
 
 function Create() {
@@ -36,6 +37,7 @@ function Create() {
       }
     } catch (error) {
       console.error('Error al conectar con el servidor:', error);
+      Sentry.captureException(error);
       alert('Error del servidor');
     }
   };

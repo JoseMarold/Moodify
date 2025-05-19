@@ -3,6 +3,7 @@ import './Historical.css';
 import logo from '../../images/moodifylogo.png';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+const Sentry = require('@sentry/react');
 const API_URL = process.env.REACT_APP_API_URL;
 
 function HistoricalRecommendations() {
@@ -18,6 +19,7 @@ function HistoricalRecommendations() {
     .then(res => res.json())
     .then(data => setRecommendations(data))
     .catch(err => {
+      Sentry.captureException(err);
       console.error("Error fetching historical recommendations:", err);
     });
 }, []);

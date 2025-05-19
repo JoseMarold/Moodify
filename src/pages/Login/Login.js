@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './Login.css';
 import logo from '../../images/logom.jpg';
+const Sentry = require('@sentry/react');
 const API_URL = process.env.REACT_APP_API_URL;
 
 function Login() {
@@ -31,6 +32,7 @@ function Login() {
       }
     } catch (error) {
       console.error('Login error:', error);
+      Sentry.captureException(error);
       alert('Server error during login');
     }
   };

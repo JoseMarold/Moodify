@@ -3,6 +3,7 @@ import userPhoto from '../../images/UserPhoto.png';
 import './Recomendations.css';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+const Sentry = require('@sentry/react');
 const API_URL = process.env.REACT_APP_API_URL;
 
 function Recomendations() {
