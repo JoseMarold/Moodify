@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && npm run sentry:sourcemaps",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "sentry:sourcemaps": "sentry-cli sourcemaps inject --org universidad-rafael-landivar-y0 --project moodify-frontend ./out && sentry-cli sourcemaps upload --org universidad-rafael-landivar-y0 --project moodify-frontend ./out"
